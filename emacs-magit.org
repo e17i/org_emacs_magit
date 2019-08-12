@@ -1,123 +1,115 @@
-#+TITLE: How to use Magit in Emacs
-
 * Intro
 
-  Here I collect infos about how to migrate my typical git workflows into emacs
-  and magit.
+  This /howto/ collects infos about how to migrate my typical git workflows
+  into emacs[fn:emacs] and magit[fn:magit]. It can be used as a reference by
+  just displaying the table of contents, which shows an overview of the
+  relevant functions and their key bindings. Following the link of one of the
+  overview entries then shows additional infos.
 
 
 * Summoning magit
 
-** cloning a repo
+** Cloning a repo
 
-   Just call 'M-x magit-clone', which is asking for a repo path and a local path.
+   Just call =M-x magit-clone=, which is asking for a repo path and a local path.
 
-** showing the status (and entry view) of a local git repo
+** Showing the status (and entry view) of a local git repo
 
-   Just call 'M-x magit-status' in a git-controlled directory. This should
+   Just call =M-x magit-status= in a git-controlled directory. This should
    probably be bound to a convenient key.
 
    Calling magit-status in a non-git-controlled directory asks if a new git
    repository should be initialized. Then, you can just stage untracked files to
    add and stage them.
 
-** general handling
+** General handling
 
-   In magit-status, place the mark on a commit, then press return to show the
-   diffs of this commit. In the diff view, n/p jump to the next/prev diff chunk.
-   Press return in a chunk to visit its file in the current buffer. When
-   finished, press q to return to the diff view. Alternatively, press C-u RET to
+   In magit-status, you can see infos about branch, remote repo, states of
+   untracked/unstaged/staged files and recent commits. Pressing =TAB= on one
+   of the sections usually reveals more information. Pressing =g= updates the
+   contents.
+
+   Place the mark on a commit, then press =RET= to show the diffs of this
+   commit. In the diff view, =n/p= jump to the next/prev diff chunk. Press
+   =RET= in a chunk to visit its file in the current buffer. When finished,
+   press =q= to return to the diff view. Alternatively, press =C-u RET= to
    visit the file in the other buffer.
 
    In general, you can select lines (just by marking them as usual) defining an
    input for actions. For example, mark some unstaged files and execute stage
    puts just these files onto the index. Mark a range of lines by placing point
    on beginning of first line, set the mark and move point to beginning of line
-   after last line.
+   after last line. Some of the command keys open transient menu buffers,
+   showing further command options. For example, the =c= key opens the commit
+   menu, allowing selection of options and commit variants. There again, the
+   =c= key selects the default commit action. This template is repeated in
+   most commands (=b b= checks out another branch, =l l= shows the log of the
+   loca branch).
 
 
 * Handling of repos
 
-** /%/ worktree
+** =%= worktree
    shows the worktree menu.
    allows adding and removing of work trees.
-** /M/ remotes
+** =M= remotes
    add or remove remotes. Also can prune stale branches.
-** /f/ fetch
+** =f= fetch
    allows fetching and also pruning of stale branches. Best practice would be
    to open the git log ($) to see the branches actually fetched, which still
    must be merged (fast-forwarded) into the local branches.
-** /F/ pull
-   pulls the selected remote (fetches then merges). You can specify the -r flag
+** =F= pull
+   pulls the selected remote (fetches then merges). You can specify the =-r= flag
    to rebase all local commits onto the merged branch.
-** /P/ push
-   push the branch to selected remote. The flag -t pushes all tags. After
-   rebasing, probably push with -f.
-** /t/ handle tag
+** =P= push
+   push the branch to selected remote. The flag =-t= pushes all tags. After
+   rebasing, probably push with =-f=.
+** =t= handle tag
    creates and removes tags. Use tab completion to show all existing tags. The
    prune function allows to remove missing tags locally or on the remote.
 
 
-* handling of branches
+* Handling of branches
 
-** /l/ show log of current (or all) branch(es).
-   example: l l (log current) or l a (log all) opens the log view. RET on a
-   line shows the corresponding commit info (same as d c). d d shows the diff
+** =l= show log of current (or all) branch(es).
+   example: =l l= (log current) or =l a= (log all) opens the log view. =RET= on a
+   line shows the corresponding commit info (same as =d c=). =d d= shows the diff
    for this commit.
-** /b/ branch menu
+** =b= branch menu
    checkout, create or delete branches. Here the branch can also be "resetted".
-** /s/ stage
+** =s= stage
    you can select all staged/unstaged files, stage single entries or select a
    subset by marking the lines.
-** /u/ unstage
-** /Z/ stash
-** /X/ reset
-** /k/ discard a change from working tree
+** =u= unstage
+** =Z= stash
+** =X= reset
+** =k= discard a change from working tree
 
-** /y/ show refs
-** /d/ diff
+** =y= show refs
+** =d= diff
 
-** /m/ merge
-** /r/ rebase
+** =m= merge
+** =r= rebase
    besides simple rebasing, allows for interactive and rebasing of subsets.
    Rebase a subset by showing the log, placing the mark onto the commit to be
-   rebased on, starting the operation and then selecting a commit using 'C-c
-   C-c'. This one and all above are then selected to be rebased. Rebasing
+   rebased on, starting the operation and then selecting a commit using =C-c
+   C-c=. This one and all above are then selected to be rebased. Rebasing
    interactively shows a buffer containing commits and rebase commands. It
    provies a list of editing commands to move and change the commit commands.
    All of them are also shown in the buffer.
-** /c/ commit
-** /A/ cherry-pick
-** /V/ revert
+** =c= commit
+** =A= cherry-pick
+** =V= revert
    creates a new commit reverting a previous commit or a change.
 
-   To abort a conflicted rebase or merge use 'M-x magit-abort-dwim'.
+   To abort a conflicted rebase or merge use =M-x magit-abort-dwim=.
 
 
-* open questions
+* Open Questions
 
-** how to request remote show origin
+** TODO how to request remote show origin
 
+* Footnotes
 
-* short reference
-
-  - % worktree menu
-  - M remotes
-  - f fetch
-  - F pull
-  - P push
-  - t handle tag
-  - l show log
-  - b branch menu
-  - s stage
-  - u unstage
-  - Z stash
-  - X reset
-  - k discard a change from working tree
-  - y show refs
-  - d diff
-  - m merge
-  - r rebase
-  - c commit
-  - A cherry-pick
-  - V revert
+[fn:emacs] see https://www.gnu.org/software/emacs/
+[fn:magit] see https://magit.vc/
