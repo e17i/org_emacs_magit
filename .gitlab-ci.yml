@@ -1,0 +1,12 @@
+image: registry.contact.de/phix
+
+pages:
+  tags:
+    - Docker
+  script:
+    - phix -d public html magit.rst
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
