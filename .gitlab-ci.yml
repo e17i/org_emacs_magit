@@ -1,6 +1,6 @@
 pages:
   script:
-    cp emacs-magit.html public/index.html
+    - cp emacs-magit.html public/index.html
   artifacts:
     paths:
       - public
