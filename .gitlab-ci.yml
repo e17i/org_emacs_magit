@@ -1,3 +1,5 @@
+image: alpine:latest
+
 pages:
   script:
     - cp emacs-magit.html public/index.html
