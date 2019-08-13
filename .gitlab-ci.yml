@@ -4,6 +4,7 @@ pages:
   tags:
     - Docker
   script:
+    - mkdir public
     - cp emacs-magit.html public/index.html
   artifacts:
     paths:
