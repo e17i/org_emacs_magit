@@ -1,3 +1,5 @@
+#+TITLE: How to use Magit in Emacs
+
 * Intro
 
   This /howto/ collects infos about how to migrate my typical git workflows
