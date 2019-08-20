@@ -24,6 +24,11 @@
    repository should be initialized. Then, you can just stage untracked files to
    add and stage them.
 
+   Calling =M-x global-magit-file-mode= enables =magit-file-mode= in directory
+   buffers. This enables =C-x g= to display the status and =C-x M-g=
+   activating =magit-dispatch= to get the most relevant magit commands into
+   reach.
+
 ** General handling
 
    In magit-status, you can see infos about branch, remote repo, states of
