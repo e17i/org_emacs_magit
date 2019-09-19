@@ -89,8 +89,12 @@
    subset by marking the lines.
 ** =u= unstage
 ** =Z= stash
-** =X= reset
+** =X= reset (small x - reset quick)
+   allows to reset the current branch head only (soft), head and index (mixed)
+   or head, index and working copy (hard); or to reset a file by copying from
+   a commit to index and working copy.
 ** =k= discard a change from working tree
+   checkout from HEAD to index and working copy.
 
 ** =y= show refs
 ** =d= diff
