@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-09-19 Do 16:28 -->
+<!-- 2020-01-28 Di 17:51 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>How to use Magit in Emacs</title>
@@ -156,37 +156,42 @@ for the JavaScript code in this tag.
 <li><a href="#orgheadline4">2.3. General handling</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline12">3. Handling of repos</a>
+<li><a href="#orgheadline16">3. Handling of repos</a>
 <ul>
-<li><a href="#orgheadline6">3.1. <code>%</code> worktree</a></li>
-<li><a href="#orgheadline7">3.2. <code>M</code> remotes</a></li>
-<li><a href="#orgheadline8">3.3. <code>f</code> fetch</a></li>
-<li><a href="#orgheadline9">3.4. <code>F</code> pull</a></li>
-<li><a href="#orgheadline10">3.5. <code>P</code> push</a></li>
-<li><a href="#orgheadline11">3.6. <code>t</code> handle tag</a></li>
+<li><a href="#orgheadline6">3.1. <code>y</code> show refs</a></li>
+<li><a href="#orgheadline7">3.2. <code>%</code> worktree</a></li>
+<li><a href="#orgheadline8">3.3. <code>M</code> remotes</a></li>
+<li><a href="#orgheadline9">3.4. <code>f</code> fetch</a></li>
+<li><a href="#orgheadline10">3.5. <code>F</code> pull</a></li>
+<li><a href="#orgheadline11">3.6. <code>P</code> push</a></li>
+<li><a href="#orgheadline12">3.7. <code>t</code> handle tag</a></li>
+<li><a href="#orgheadline13">3.8. <code>i</code> ignore</a></li>
+<li><a href="#orgheadline14">3.9. <code>s</code> add</a></li>
+<li><a href="#orgheadline15">3.10. <code>!</code> run command</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline27">4. Handling of branches</a>
+<li><a href="#orgheadline31">4. Handling of branches</a>
 <ul>
-<li><a href="#orgheadline13">4.1. <code>l</code> show log of current (or all) branch(es).</a></li>
-<li><a href="#orgheadline14">4.2. <code>b</code> branch menu</a></li>
-<li><a href="#orgheadline15">4.3. <code>s</code> stage</a></li>
-<li><a href="#orgheadline16">4.4. <code>u</code> unstage</a></li>
-<li><a href="#orgheadline17">4.5. <code>Z</code> stash</a></li>
-<li><a href="#orgheadline18">4.6. <code>X</code> reset (small x - reset quick)</a></li>
-<li><a href="#orgheadline19">4.7. <code>k</code> discard a change from working tree</a></li>
-<li><a href="#orgheadline20">4.8. <code>y</code> show refs</a></li>
-<li><a href="#orgheadline21">4.9. <code>d</code> diff</a></li>
-<li><a href="#orgheadline22">4.10. <code>m</code> merge</a></li>
-<li><a href="#orgheadline23">4.11. <code>r</code> rebase</a></li>
-<li><a href="#orgheadline24">4.12. <code>c</code> commit</a></li>
-<li><a href="#orgheadline25">4.13. <code>A</code> cherry-pick</a></li>
-<li><a href="#orgheadline26">4.14. <code>V</code> revert</a></li>
+<li><a href="#orgheadline17">4.1. <code>l</code> show log/reflog of current (or all) branch(es).</a></li>
+<li><a href="#orgheadline18">4.2. <code>b</code> branch menu</a></li>
+<li><a href="#orgheadline19">4.3. <code>s</code> stage (<code>S</code> stage all)</a></li>
+<li><a href="#orgheadline20">4.4. <code>u</code> unstage (<code>U</code> unstage all)</a></li>
+<li><a href="#orgheadline21">4.5. <code>Z</code> stash</a></li>
+<li><a href="#orgheadline22">4.6. <code>X</code> reset or checkout (small <code>x</code> - reset quick)</a></li>
+<li><a href="#orgheadline23">4.7. <code>k</code> discard a change from working tree</a></li>
+<li><a href="#orgheadline24">4.8. <code>d</code> diff</a></li>
+<li><a href="#orgheadline25">4.9. <code>m</code> merge</a></li>
+<li><a href="#orgheadline26">4.10. <code>r</code> rebase</a></li>
+<li><a href="#orgheadline27">4.11. <code>c</code> commit</a></li>
+<li><a href="#orgheadline28">4.12. <code>A</code> cherry-pick</a></li>
+<li><a href="#orgheadline29">4.13. <code>V</code> revert interactively</a></li>
+<li><a href="#orgheadline30">4.14. <code>v</code> revert</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline29">5. Open Questions</a>
+<li><a href="#orgheadline32">5. Resolving conflicts</a></li>
+<li><a href="#orgheadline34">6. Best Practice</a>
 <ul>
-<li><a href="#orgheadline28">5.1. <span class="todo TODO">TODO</span> how to request remote show origin</a></li>
+<li><a href="#orgheadline33">6.1. Requesting <code>remote show origin</code></a></li>
 </ul>
 </li>
 </ul>
@@ -202,10 +207,17 @@ into emacs<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup> and magit<
 just displaying the table of contents, which shows an overview of the
 relevant functions and their key bindings. Following the link of one of the
 overview entries then shows additional infos.
+Online at <a href="http://jko.pages.contact.de/emacs_magit">http://jko.pages.contact.de/emacs_magit</a>
+</p>
+
+<p>
+Some of magits killer features are the ability to stage not only diff hunks,
+but arbitrary file snippets; and the interactive and subset rebasing
+facilities. Besides that, browsing, navigationg and discovering every piece
+of information contained in a git repo is really convenient.
 </p>
 </div>
 </div>
-
 
 <div id="outline-container-orgheadline5" class="outline-2">
 <h2 id="orgheadline5"><span class="section-number-2">2</span> Summoning magit</h2>
@@ -223,12 +235,11 @@ Just call <code>M-x magit-clone</code>, which is asking for a repo path and a lo
 <h3 id="orgheadline3"><span class="section-number-3">2.2</span> Showing the status (and entry view) of a local git repo</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
-Just call <code>M-x magit-status</code> in a git-controlled directory. This should
-probably be bound to a convenient key.
+Just call <code>M-x magit-status</code> in a git-controlled directory.
 </p>
 
 <p>
-Calling magit-status in a non-git-controlled directory asks if a new git
+Calling <code>magit-status</code> in a non-git-controlled directory asks if a new git
 repository should be initialized. Then, you can just stage untracked files to
 add and stage them.
 </p>
@@ -237,7 +248,13 @@ add and stage them.
 Calling <code>M-x global-magit-file-mode</code> enables <code>magit-file-mode</code> in directory
 buffers. This enables <code>C-x g</code> to display the status and <code>C-x M-g</code>
 activating <code>magit-dispatch</code> to get the most relevant magit commands into
-reach.
+reach. Both normally are active in file buffers of git-controlled repos.
+<code>?</code> also shows the dispatch menu.
+</p>
+
+<p>
+In all situations <code>$</code> shows the git output buffer, allowing you to inspect
+what actuallly happened. To directly issue a git command, use <code>:</code>.
 </p>
 </div>
 </div>
@@ -246,60 +263,74 @@ reach.
 <h3 id="orgheadline4"><span class="section-number-3">2.3</span> General handling</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
-In magit-status, you can see infos about branch, remote repo, states of
+In <code>magit-status</code>, you can see infos about branch, remote repo, states of
 untracked/unstaged/staged files and recent commits. Pressing <code>TAB</code> on one
 of the sections usually reveals more information. Pressing <code>g</code> updates the
-contents.
+contents. <code>M-TAB</code> cycles through visibility of current changes.
 </p>
 
 <p>
 Place the mark on a commit, then press <code>RET</code> to show the diffs of this
-commit. In the diff view, <code>n/p</code> jump to the next/prev diff chunk. Press
+commit. In the diff view, <code>M-n/M-p</code> jump to the next/prev diff chunk. Press
 <code>RET</code> in a chunk to visit its file in the current buffer. When finished,
 press <code>q</code> to return to the diff view. Alternatively, press <code>C-u RET</code> to
 visit the file in the other buffer.
 </p>
 
 <p>
-In general, you can select lines (just by marking them as usual) defining an
-input for actions. For example, mark some unstaged files and execute stage
-puts just these files onto the index. Mark a range of lines by placing point
-on beginning of first line, set the mark and move point to beginning of line
-after last line. Some of the command keys open transient menu buffers,
-showing further command options. For example, the <code>c</code> key opens the commit
-menu, allowing selection of options and commit variants. There again, the
-<code>c</code> key selects the default commit action. This template is repeated in
-most commands (<code>b b</code> checks out another branch, <code>l l</code> shows the log of the
-loca branch).
+Just browsing changes is achieved by pressing <code>SPC</code> on a commit or in the
+log view. Then you can still navigate through commits while each one is
+shown in the info window. Repeatedly pressing <code>SPC</code> scrolls through the
+commit's diffs -  <code>DEL</code> scrolls backwards.
+</p>
+
+<p>
+In general, you can select lines (just by marking them as usual) defining
+an input for actions. For example, mark some unstaged files and execute
+stage puts just these files onto the index. Marking a region of a changed
+file allows to just stage this region, so you can put different changes of
+the same file into different commits. Some of the command keys open
+transient menu buffers, showing further command options. For example, the
+<code>c</code> key opens the commit menu, allowing selection of options and commit
+variants. There again, the <code>c</code> key selects the default commit action. This
+template is repeated in most commands (<code>b b</code> checks out another branch, <code>l
+   l</code> shows the log of the loca branch).
 </p>
 </div>
 </div>
 </div>
 
-
-<div id="outline-container-orgheadline12" class="outline-2">
-<h2 id="orgheadline12"><span class="section-number-2">3</span> Handling of repos</h2>
+<div id="outline-container-orgheadline16" class="outline-2">
+<h2 id="orgheadline16"><span class="section-number-2">3</span> Handling of repos</h2>
 <div class="outline-text-2" id="text-3">
 </div><div id="outline-container-orgheadline6" class="outline-3">
-<h3 id="orgheadline6"><span class="section-number-3">3.1</span> <code>%</code> worktree</h3>
+<h3 id="orgheadline6"><span class="section-number-3">3.1</span> <code>y</code> show refs</h3>
 <div class="outline-text-3" id="text-3-1">
+<p>
+gives a quick overview of all configured remotes.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7"><span class="section-number-3">3.2</span> <code>%</code> worktree</h3>
+<div class="outline-text-3" id="text-3-2">
 <p>
 shows the worktree menu.
 allows adding and removing of work trees.
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline7" class="outline-3">
-<h3 id="orgheadline7"><span class="section-number-3">3.2</span> <code>M</code> remotes</h3>
-<div class="outline-text-3" id="text-3-2">
+<div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8"><span class="section-number-3">3.3</span> <code>M</code> remotes</h3>
+<div class="outline-text-3" id="text-3-3">
 <p>
 add or remove remotes. Also can prune stale branches.
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline8" class="outline-3">
-<h3 id="orgheadline8"><span class="section-number-3">3.3</span> <code>f</code> fetch</h3>
-<div class="outline-text-3" id="text-3-3">
+<div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9"><span class="section-number-3">3.4</span> <code>f</code> fetch</h3>
+<div class="outline-text-3" id="text-3-4">
 <p>
 allows fetching and also pruning of stale branches. Best practice would be
 to open the git log ($) to see the branches actually fetched, which still
@@ -307,74 +338,111 @@ must be merged (fast-forwarded) into the local branches.
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline9" class="outline-3">
-<h3 id="orgheadline9"><span class="section-number-3">3.4</span> <code>F</code> pull</h3>
-<div class="outline-text-3" id="text-3-4">
+<div id="outline-container-orgheadline10" class="outline-3">
+<h3 id="orgheadline10"><span class="section-number-3">3.5</span> <code>F</code> pull</h3>
+<div class="outline-text-3" id="text-3-5">
 <p>
 pulls the selected remote (fetches then merges). You can specify the <code>-r</code> flag
 to rebase all local commits onto the merged branch.
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline10" class="outline-3">
-<h3 id="orgheadline10"><span class="section-number-3">3.5</span> <code>P</code> push</h3>
-<div class="outline-text-3" id="text-3-5">
+<div id="outline-container-orgheadline11" class="outline-3">
+<h3 id="orgheadline11"><span class="section-number-3">3.6</span> <code>P</code> push</h3>
+<div class="outline-text-3" id="text-3-6">
 <p>
 push the branch to selected remote. The flag <code>-t</code> pushes all tags. After
 rebasing, probably push with <code>-f</code>.
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline11" class="outline-3">
-<h3 id="orgheadline11"><span class="section-number-3">3.6</span> <code>t</code> handle tag</h3>
-<div class="outline-text-3" id="text-3-6">
+<div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12"><span class="section-number-3">3.7</span> <code>t</code> handle tag</h3>
+<div class="outline-text-3" id="text-3-7">
 <p>
 creates and removes tags. Use tab completion to show all existing tags. The
 prune function allows to remove missing tags locally or on the remote.
 </p>
 </div>
 </div>
-</div>
-
-
-<div id="outline-container-orgheadline27" class="outline-2">
-<h2 id="orgheadline27"><span class="section-number-2">4</span> Handling of branches</h2>
-<div class="outline-text-2" id="text-4">
-</div><div id="outline-container-orgheadline13" class="outline-3">
-<h3 id="orgheadline13"><span class="section-number-3">4.1</span> <code>l</code> show log of current (or all) branch(es).</h3>
-<div class="outline-text-3" id="text-4-1">
+<div id="outline-container-orgheadline13" class="outline-3">
+<h3 id="orgheadline13"><span class="section-number-3">3.8</span> <code>i</code> ignore</h3>
+<div class="outline-text-3" id="text-3-8">
 <p>
-example: <code>l l</code> (log current) or <code>l a</code> (log all) opens the log view. <code>RET</code> on a
-line shows the corresponding commit info (same as <code>d c</code>). <code>d d</code> shows the diff
-for this commit.
+add selected file to <code>.gitignore</code> file.
 </p>
 </div>
 </div>
 <div id="outline-container-orgheadline14" class="outline-3">
-<h3 id="orgheadline14"><span class="section-number-3">4.2</span> <code>b</code> branch menu</h3>
+<h3 id="orgheadline14"><span class="section-number-3">3.9</span> <code>s</code> add</h3>
+<div class="outline-text-3" id="text-3-9">
+<p>
+staging/unstaging untracked files allows also to add/remove them. With a
+prefix arg (<code>C-u</code>) stages only the file, not the content, which then is
+shown in the unstaged area.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline15" class="outline-3">
+<h3 id="orgheadline15"><span class="section-number-3">3.10</span> <code>!</code> run command</h3>
+<div class="outline-text-3" id="text-3-10">
+<p>
+starts git commands, shell commands or gitk/git gui in current directory.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline31" class="outline-2">
+<h2 id="orgheadline31"><span class="section-number-2">4</span> Handling of branches</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-orgheadline17" class="outline-3">
+<h3 id="orgheadline17"><span class="section-number-3">4.1</span> <code>l</code> show log/reflog of current (or all) branch(es).</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+example: <code>l l</code> (log current) or <code>l a</code> (log all) opens the log view. <code>RET</code> on a
+line shows the corresponding commit info (same as <code>d c</code>). <code>d d</code> shows the diff
+for this commit. Browse through diffs with <code>SPC</code>.
+Also shows the reflog.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline18" class="outline-3">
+<h3 id="orgheadline18"><span class="section-number-3">4.2</span> <code>b</code> branch menu</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 checkout, create or delete branches. Here the branch can also be "resetted".
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline15" class="outline-3">
-<h3 id="orgheadline15"><span class="section-number-3">4.3</span> <code>s</code> stage</h3>
+<div id="outline-container-orgheadline19" class="outline-3">
+<h3 id="orgheadline19"><span class="section-number-3">4.3</span> <code>s</code> stage (<code>S</code> stage all)</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 you can select all staged/unstaged files, stage single entries or select a
-subset by marking the lines.
+file's region by marking the lines.
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline16" class="outline-3">
-<h3 id="orgheadline16"><span class="section-number-3">4.4</span> <code>u</code> unstage</h3>
+<div id="outline-container-orgheadline20" class="outline-3">
+<h3 id="orgheadline20"><span class="section-number-3">4.4</span> <code>u</code> unstage (<code>U</code> unstage all)</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+Select elements from index to be unstaged. This way the staging area gets
+really easy..
+</p>
 </div>
-<div id="outline-container-orgheadline17" class="outline-3">
-<h3 id="orgheadline17"><span class="section-number-3">4.5</span> <code>Z</code> stash</h3>
 </div>
-<div id="outline-container-orgheadline18" class="outline-3">
-<h3 id="orgheadline18"><span class="section-number-3">4.6</span> <code>X</code> reset (small x - reset quick)</h3>
+<div id="outline-container-orgheadline21" class="outline-3">
+<h3 id="orgheadline21"><span class="section-number-3">4.5</span> <code>Z</code> stash</h3>
+<div class="outline-text-3" id="text-4-5">
+<p>
+intuitively use the stashing feature. Best practice to use this often.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline22" class="outline-3">
+<h3 id="orgheadline22"><span class="section-number-3">4.6</span> <code>X</code> reset or checkout (small <code>x</code> - reset quick)</h3>
 <div class="outline-text-3" id="text-4-6">
 <p>
 allows to reset the current branch head only (soft), head and index (mixed)
@@ -383,28 +451,34 @@ a commit to index and working copy.
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline19" class="outline-3">
-<h3 id="orgheadline19"><span class="section-number-3">4.7</span> <code>k</code> discard a change from working tree</h3>
+<div id="outline-container-orgheadline23" class="outline-3">
+<h3 id="orgheadline23"><span class="section-number-3">4.7</span> <code>k</code> discard a change from working tree</h3>
 <div class="outline-text-3" id="text-4-7">
 <p>
 checkout from HEAD to index and working copy.
 </p>
 </div>
 </div>
-
-<div id="outline-container-orgheadline20" class="outline-3">
-<h3 id="orgheadline20"><span class="section-number-3">4.8</span> <code>y</code> show refs</h3>
+<div id="outline-container-orgheadline24" class="outline-3">
+<h3 id="orgheadline24"><span class="section-number-3">4.8</span> <code>d</code> diff</h3>
+<div class="outline-text-3" id="text-4-8">
+<p>
+shows diffs between unstaged/staged/committed files. Here and in all diff
+views you can also use <code>s</code> (stage diff hunk) or <code>k</code> (discard diff hunk).
+</p>
 </div>
-<div id="outline-container-orgheadline21" class="outline-3">
-<h3 id="orgheadline21"><span class="section-number-3">4.9</span> <code>d</code> diff</h3>
 </div>
-
-<div id="outline-container-orgheadline22" class="outline-3">
-<h3 id="orgheadline22"><span class="section-number-3">4.10</span> <code>m</code> merge</h3>
+<div id="outline-container-orgheadline25" class="outline-3">
+<h3 id="orgheadline25"><span class="section-number-3">4.9</span> <code>m</code> merge</h3>
+<div class="outline-text-3" id="text-4-9">
+<p>
+allows all flavors of merging.
+</p>
 </div>
-<div id="outline-container-orgheadline23" class="outline-3">
-<h3 id="orgheadline23"><span class="section-number-3">4.11</span> <code>r</code> rebase</h3>
-<div class="outline-text-3" id="text-4-11">
+</div>
+<div id="outline-container-orgheadline26" class="outline-3">
+<h3 id="orgheadline26"><span class="section-number-3">4.10</span> <code>r</code> rebase</h3>
+<div class="outline-text-3" id="text-4-10">
 <p>
 besides simple rebasing, allows for interactive and rebasing of subsets.
 Rebase a subset by showing the log, placing the mark onto the commit to be
@@ -416,32 +490,61 @@ All of them are also shown in the buffer.
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline24" class="outline-3">
-<h3 id="orgheadline24"><span class="section-number-3">4.12</span> <code>c</code> commit</h3>
+<div id="outline-container-orgheadline27" class="outline-3">
+<h3 id="orgheadline27"><span class="section-number-3">4.11</span> <code>c</code> commit</h3>
+<div class="outline-text-3" id="text-4-11">
+<p>
+commit stage or edit, amend, augment commits.
+</p>
 </div>
-<div id="outline-container-orgheadline25" class="outline-3">
-<h3 id="orgheadline25"><span class="section-number-3">4.13</span> <code>A</code> cherry-pick</h3>
 </div>
-<div id="outline-container-orgheadline26" class="outline-3">
-<h3 id="orgheadline26"><span class="section-number-3">4.14</span> <code>V</code> revert</h3>
+<div id="outline-container-orgheadline28" class="outline-3">
+<h3 id="orgheadline28"><span class="section-number-3">4.12</span> <code>A</code> cherry-pick</h3>
+<div class="outline-text-3" id="text-4-12">
+<p>
+apply an other commit here or donate this onw to another branch.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline29" class="outline-3">
+<h3 id="orgheadline29"><span class="section-number-3">4.13</span> <code>V</code> revert interactively</h3>
+<div class="outline-text-3" id="text-4-13">
+<p>
+interactively reverts commits with or without change commit.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline30" class="outline-3">
+<h3 id="orgheadline30"><span class="section-number-3">4.14</span> <code>v</code> revert</h3>
 <div class="outline-text-3" id="text-4-14">
 <p>
-creates a new commit reverting a previous commit or a change.
+reverts one or more commits selected in the log. Allows to select a region
+in the log to be reverted.
 </p>
+</div>
+</div>
+</div>
 
+<div id="outline-container-orgheadline32" class="outline-2">
+<h2 id="orgheadline32"><span class="section-number-2">5</span> Resolving conflicts</h2>
+<div class="outline-text-2" id="text-5">
 <p>
 To abort a conflicted rebase or merge use <code>M-x magit-abort-dwim</code>.
+tbd
 </p>
 </div>
 </div>
+
+<div id="outline-container-orgheadline34" class="outline-2">
+<h2 id="orgheadline34"><span class="section-number-2">6</span> Best Practice</h2>
+<div class="outline-text-2" id="text-6">
+</div><div id="outline-container-orgheadline33" class="outline-3">
+<h3 id="orgheadline33"><span class="section-number-3">6.1</span> Requesting <code>remote show origin</code></h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+..is still done best by just executing it as command using <code>:</code>.
+</p>
 </div>
-
-
-<div id="outline-container-orgheadline29" class="outline-2">
-<h2 id="orgheadline29"><span class="section-number-2">5</span> Open Questions</h2>
-<div class="outline-text-2" id="text-5">
-</div><div id="outline-container-orgheadline28" class="outline-3">
-<h3 id="orgheadline28"><span class="section-number-3">5.1</span> <span class="todo TODO">TODO</span> how to request remote show origin</h3>
 </div>
 </div>
 <div id="footnotes">
@@ -461,7 +564,7 @@ see <a href="https://magit.vc/">https://magit.vc/</a>
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Jörg Kollmann</p>
-<p class="date">Created: 2019-09-19 Do 16:28</p>
+<p class="date">Created: 2020-01-28 Di 17:51</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

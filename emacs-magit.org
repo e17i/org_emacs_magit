@@ -7,7 +7,12 @@
   just displaying the table of contents, which shows an overview of the
   relevant functions and their key bindings. Following the link of one of the
   overview entries then shows additional infos.
+  Online at http://jko.pages.contact.de/emacs_magit
 
+  Some of magits killer features are the ability to stage not only diff hunks,
+  but arbitrary file snippets; and the interactive and subset rebasing
+  facilities. Besides that, browsing, navigationg and discovering every piece
+  of information contained in a git repo is really convenient.
 
 * Summoning magit
 
@@ -17,45 +22,54 @@
 
 ** Showing the status (and entry view) of a local git repo
 
-   Just call =M-x magit-status= in a git-controlled directory. This should
-   probably be bound to a convenient key.
+   Just call =M-x magit-status= in a git-controlled directory.
 
-   Calling magit-status in a non-git-controlled directory asks if a new git
+   Calling =magit-status= in a non-git-controlled directory asks if a new git
    repository should be initialized. Then, you can just stage untracked files to
    add and stage them.
 
    Calling =M-x global-magit-file-mode= enables =magit-file-mode= in directory
    buffers. This enables =C-x g= to display the status and =C-x M-g=
    activating =magit-dispatch= to get the most relevant magit commands into
-   reach.
+   reach. Both normally are active in file buffers of git-controlled repos.
+   =?= also shows the dispatch menu.
+
+   In all situations =$= shows the git output buffer, allowing you to inspect
+   what actuallly happened. To directly issue a git command, use =:=.
 
 ** General handling
 
-   In magit-status, you can see infos about branch, remote repo, states of
+   In =magit-status=, you can see infos about branch, remote repo, states of
    untracked/unstaged/staged files and recent commits. Pressing =TAB= on one
    of the sections usually reveals more information. Pressing =g= updates the
-   contents.
+   contents. =M-TAB= cycles through visibility of current changes.
 
    Place the mark on a commit, then press =RET= to show the diffs of this
-   commit. In the diff view, =n/p= jump to the next/prev diff chunk. Press
+   commit. In the diff view, =M-n/M-p= jump to the next/prev diff chunk. Press
    =RET= in a chunk to visit its file in the current buffer. When finished,
    press =q= to return to the diff view. Alternatively, press =C-u RET= to
    visit the file in the other buffer.
+   
+   Just browsing changes is achieved by pressing =SPC= on a commit or in the
+   log view. Then you can still navigate through commits while each one is
+   shown in the info window. Repeatedly pressing =SPC= scrolls through the
+   commit's diffs -  =DEL= scrolls backwards.
 
-   In general, you can select lines (just by marking them as usual) defining an
-   input for actions. For example, mark some unstaged files and execute stage
-   puts just these files onto the index. Mark a range of lines by placing point
-   on beginning of first line, set the mark and move point to beginning of line
-   after last line. Some of the command keys open transient menu buffers,
-   showing further command options. For example, the =c= key opens the commit
-   menu, allowing selection of options and commit variants. There again, the
-   =c= key selects the default commit action. This template is repeated in
-   most commands (=b b= checks out another branch, =l l= shows the log of the
-   loca branch).
-
+   In general, you can select lines (just by marking them as usual) defining
+   an input for actions. For example, mark some unstaged files and execute
+   stage puts just these files onto the index. Marking a region of a changed
+   file allows to just stage this region, so you can put different changes of
+   the same file into different commits. Some of the command keys open
+   transient menu buffers, showing further command options. For example, the
+   =c= key opens the commit menu, allowing selection of options and commit
+   variants. There again, the =c= key selects the default commit action. This
+   template is repeated in most commands (=b b= checks out another branch, =l
+   l= shows the log of the loca branch).
 
 * Handling of repos
 
+** =y= show refs
+   gives a quick overview of all configured remotes.
 ** =%= worktree
    shows the worktree menu.
    allows adding and removing of work trees.
@@ -74,32 +88,43 @@
 ** =t= handle tag
    creates and removes tags. Use tab completion to show all existing tags. The
    prune function allows to remove missing tags locally or on the remote.
-
+** =i= ignore
+   add selected file to =.gitignore= file.
+** =s= add
+   staging/unstaging untracked files allows also to add/remove them. With a
+   prefix arg (=C-u=) stages only the file, not the content, which then is
+   shown in the unstaged area.
+** =!= run command
+   starts git commands, shell commands or gitk/git gui in current directory.
 
 * Handling of branches
 
-** =l= show log of current (or all) branch(es).
+** =l= show log/reflog of current (or all) branch(es).
    example: =l l= (log current) or =l a= (log all) opens the log view. =RET= on a
    line shows the corresponding commit info (same as =d c=). =d d= shows the diff
-   for this commit.
+   for this commit. Browse through diffs with =SPC=.
+   Also shows the reflog.
 ** =b= branch menu
    checkout, create or delete branches. Here the branch can also be "resetted".
-** =s= stage
+** =s= stage (=S= stage all)
    you can select all staged/unstaged files, stage single entries or select a
-   subset by marking the lines.
-** =u= unstage
+   file's region by marking the lines.
+** =u= unstage (=U= unstage all)
+   Select elements from index to be unstaged. This way the staging area gets
+   really easy..
 ** =Z= stash
-** =X= reset (small x - reset quick)
+   intuitively use the stashing feature. Best practice to use this often.
+** =X= reset or checkout (small =x= - reset quick)
    allows to reset the current branch head only (soft), head and index (mixed)
    or head, index and working copy (hard); or to reset a file by copying from
    a commit to index and working copy.
 ** =k= discard a change from working tree
    checkout from HEAD to index and working copy.
-
-** =y= show refs
 ** =d= diff
-
+   shows diffs between unstaged/staged/committed files. Here and in all diff
+   views you can also use =s= (stage diff hunk) or =k= (discard diff hunk).
 ** =m= merge
+   allows all flavors of merging.
 ** =r= rebase
    besides simple rebasing, allows for interactive and rebasing of subsets.
    Rebase a subset by showing the log, placing the mark onto the commit to be
@@ -109,16 +134,25 @@
    provies a list of editing commands to move and change the commit commands.
    All of them are also shown in the buffer.
 ** =c= commit
+   commit stage or edit, amend, augment commits.
 ** =A= cherry-pick
-** =V= revert
-   creates a new commit reverting a previous commit or a change.
+   apply an other commit here or donate this onw to another branch.
+** =V= revert interactively
+   interactively reverts commits with or without change commit.
+** =v= revert
+   reverts one or more commits selected in the log. Allows to select a region
+   in the log to be reverted.
 
-   To abort a conflicted rebase or merge use =M-x magit-abort-dwim=.
+* Resolving conflicts
 
+To abort a conflicted rebase or merge use =M-x magit-abort-dwim=.
+tbd
 
-* Open Questions
+* Best Practice
 
-** TODO how to request remote show origin
+** Requesting ~remote show origin~
+   ..is still done best by just executing it as command using =:=.
+
 
 * Footnotes
 
