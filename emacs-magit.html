@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-01-28 Di 17:51 -->
+<!-- 2020-01-31 Fr 10:23 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>How to use Magit in Emacs</title>
@@ -188,10 +188,14 @@ for the JavaScript code in this tag.
 <li><a href="#orgheadline30">4.14. <code>v</code> revert</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline32">5. Resolving conflicts</a></li>
-<li><a href="#orgheadline34">6. Best Practice</a>
+<li><a href="#orgheadline33">5. Resolving conflicts</a>
 <ul>
-<li><a href="#orgheadline33">6.1. Requesting <code>remote show origin</code></a></li>
+<li><a href="#orgheadline32">5.1. <code>e</code> edit conflicting file</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline35">6. Best Practice</a>
+<ul>
+<li><a href="#orgheadline34">6.1. Requesting <code>remote show origin</code></a></li>
 </ul>
 </li>
 </ul>
@@ -215,6 +219,8 @@ Some of magits killer features are the ability to stage not only diff hunks,
 but arbitrary file snippets; and the interactive and subset rebasing
 facilities. Besides that, browsing, navigationg and discovering every piece
 of information contained in a git repo is really convenient.
+Also working in the log or reflog view to select commits or ranges is very
+convenient. 
 </p>
 </div>
 </div>
@@ -405,6 +411,12 @@ line shows the corresponding commit info (same as <code>d c</code>). <code>d d</
 for this commit. Browse through diffs with <code>SPC</code>.
 Also shows the reflog.
 </p>
+
+<p>
+<code>C-w</code> on a commit copies the id  to the clipboard (kill ring), which is
+very convenient in places where commits can not be visually selected, but
+instead are requested in the minibuffer.
+</p>
 </div>
 </div>
 <div id="outline-container-orgheadline18" class="outline-3">
@@ -525,21 +537,56 @@ in the log to be reverted.
 </div>
 </div>
 
-<div id="outline-container-orgheadline32" class="outline-2">
-<h2 id="orgheadline32"><span class="section-number-2">5</span> Resolving conflicts</h2>
+<div id="outline-container-orgheadline33" class="outline-2">
+<h2 id="orgheadline33"><span class="section-number-2">5</span> Resolving conflicts</h2>
 <div class="outline-text-2" id="text-5">
 <p>
-To abort a conflicted rebase or merge use <code>M-x magit-abort-dwim</code>.
-tbd
+When some merge, rebase, cherry-pick operations are suspended in a conflicting
+state, <code>magit-status</code> shows shows the list of commits being processed within
+the operation. As in an interactive rebase operation, they are marked as
+<code>onto</code> (the commit merges are replayed on), <code>committed</code> (commits already
+processed), <code>pick</code> (commits to be processed). This overview also gives some
+degree of transparency.
+The conflicting files are shown as unstaged, so they can just be edited. 
+</p>
+</div>
+
+<div id="outline-container-orgheadline32" class="outline-3">
+<h3 id="orgheadline32"><span class="section-number-3">5.1</span> <code>e</code> edit conflicting file</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+As easy way to resolve conflicts, calls <code>ediff-mode</code>. Here you can use
+<code>n</code> / <code>p</code> to jump to next/prev conflicting hunks. With a hunk selected,
+<code>a</code>, <code>b</code> selects the contents from left or right conflicting source. When
+finished, <code>q</code> leaves ediff mode.
+</p>
+
+
+<p>
+After resolving conflicts, as usual, stage resolved files. When merging,
+conclude with a commit. When rebasing, instead use <code>M-x
+magit-rebase-continue</code>. When a rebase resolves into no change, you may use
+<code>M-x magit-rebase-skip</code> to continue.
+</p>
+
+<p>
+To abort a conflicted rebase or merge, use <code>M-x magit-abort-dwim</code>.
+</p>
+
+<p>
+Advenced workflows may include usage of <code>git mergetool</code> with <code>emerge</code> tool.
+That said, one of the best tools for <code>git mergetool</code> may still be <code>vimdiff</code>.
 </p>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orgheadline34" class="outline-2">
-<h2 id="orgheadline34"><span class="section-number-2">6</span> Best Practice</h2>
+
+<div id="outline-container-orgheadline35" class="outline-2">
+<h2 id="orgheadline35"><span class="section-number-2">6</span> Best Practice</h2>
 <div class="outline-text-2" id="text-6">
-</div><div id="outline-container-orgheadline33" class="outline-3">
-<h3 id="orgheadline33"><span class="section-number-3">6.1</span> Requesting <code>remote show origin</code></h3>
+</div><div id="outline-container-orgheadline34" class="outline-3">
+<h3 id="orgheadline34"><span class="section-number-3">6.1</span> Requesting <code>remote show origin</code></h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 ..is still done best by just executing it as command using <code>:</code>.
@@ -564,7 +611,7 @@ see <a href="https://magit.vc/">https://magit.vc/</a>
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Jörg Kollmann</p>
-<p class="date">Created: 2020-01-28 Di 17:51</p>
+<p class="date">Created: 2020-01-31 Fr 10:23</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

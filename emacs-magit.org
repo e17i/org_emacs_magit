@@ -13,6 +13,8 @@
   but arbitrary file snippets; and the interactive and subset rebasing
   facilities. Besides that, browsing, navigationg and discovering every piece
   of information contained in a git repo is really convenient.
+  Also working in the log or reflog view to select commits or ranges is very
+  convenient. 
 
 * Summoning magit
 
@@ -104,6 +106,10 @@
    line shows the corresponding commit info (same as =d c=). =d d= shows the diff
    for this commit. Browse through diffs with =SPC=.
    Also shows the reflog.
+
+   =C-w= on a commit copies the id  to the clipboard (kill ring), which is
+   very convenient in places where commits can not be visually selected, but
+   instead are requested in the minibuffer.
 ** =b= branch menu
    checkout, create or delete branches. Here the branch can also be "resetted".
 ** =s= stage (=S= stage all)
@@ -145,8 +151,31 @@
 
 * Resolving conflicts
 
-To abort a conflicted rebase or merge use =M-x magit-abort-dwim=.
-tbd
+When some merge, rebase, cherry-pick operations are suspended in a conflicting
+state, ~magit-status~ shows shows the list of commits being processed within
+the operation. As in an interactive rebase operation, they are marked as
+~onto~ (the commit merges are replayed on), ~committed~ (commits already
+processed), ~pick~ (commits to be processed). This overview also gives some
+degree of transparency.
+The conflicting files are shown as unstaged, so they can just be edited. 
+
+** =e= edit conflicting file
+   As easy way to resolve conflicts, calls ~ediff-mode~. Here you can use
+   =n= / =p= to jump to next/prev conflicting hunks. With a hunk selected,
+   =a=, =b= selects the contents from left or right conflicting source. When
+   finished, =q= leaves ediff mode.
+
+
+After resolving conflicts, as usual, stage resolved files. When merging,
+conclude with a commit. When rebasing, instead use =M-x
+magit-rebase-continue=. When a rebase resolves into no change, you may use
+=M-x magit-rebase-skip= to continue.
+
+To abort a conflicted rebase or merge, use =M-x magit-abort-dwim=.
+
+Advenced workflows may include usage of ~git mergetool~ with ~emerge~ tool.
+That said, one of the best tools for ~git mergetool~ may still be ~vimdiff~.
+
 
 * Best Practice
 
