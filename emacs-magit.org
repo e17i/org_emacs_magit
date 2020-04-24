@@ -10,7 +10,7 @@
   just displaying the table of contents, which shows an overview of the
   relevant functions and their key bindings. Following the link of one of the
   overview entries then shows additional infos.
-  Online at http://jko.pages.contact.de/emacs_magit
+  Online at http://e17i.github.io/emacs_magit
 
   Some of magits killer features are the ability to stage not only diff hunks,
   but arbitrary file snippets; and the interactive and subset rebasing
