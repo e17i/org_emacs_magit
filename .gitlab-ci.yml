@@ -6,6 +6,7 @@ pages:
   script:
     - mkdir public
     - cp emacs-magit.html public/index.html
+    - cp rethink.css public/
   artifacts:
     paths:
       - public
