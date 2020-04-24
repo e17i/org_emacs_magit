@@ -1,3 +1,6 @@
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="rethink.css" />
+#+OPTIONS: num:nil htmp-style:nil
+#+AUTHOR: Jörg Kollmann
 #+TITLE: How to use Magit in Emacs
 
 * Intro
