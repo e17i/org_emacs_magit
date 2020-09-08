@@ -119,21 +119,34 @@
    you can select all staged/unstaged files, stage single entries or select a
    file's region by marking the lines.
 ** =u= unstage (=U= unstage all)
-   Select elements from index to be unstaged. This way the staging area gets
-   really easy..
+   Select elements from index to be unstaged. Unstaging actually means copying
+   elements from current HEAD to index (like ~git reset --~). This way the
+   staging area gets really easy..
 ** =Z= stash
    intuitively use the stashing feature. Best practice to use this often.
 ** =X= reset or checkout (small =x= - reset quick)
    allows to reset the current branch head only (soft), head and index (mixed)
    or head, index and working copy (hard); or to reset a file by copying from
-   a commit to index and working copy.
+   a commit to index and working copy, this way having it staged.
 ** =k= discard a change from working tree
-   checkout from HEAD to index and working copy.
+   checkout from HEAD to index and working copy, or from index to working
+   copy, depending on what is modified. Discarding an unstaged change is like
+   ~git checkout --~, discarding a staged change also applies ~reset --~
+   before.
 ** =d= diff
    shows diffs between unstaged/staged/committed files. Here and in all diff
    views you can also use =s= (stage diff hunk) or =k= (discard diff hunk).
 ** =m= merge
-   allows all flavors of merging.
+   allows all flavors of merging. When a non-ff-merge is interrupted (that is,
+   a conflicting diff is applied), the index contains the diffs of all
+   merge-branch-commits applied, the working tree contains the conflicting
+   files. Call ~magit-merge-abort~ or ~magit-abort-dwim~ to reset index and
+   working tree to previous HEAD. After resolving conflicts, stage and commit
+   to conclude merge. A squashing merge applies all commits of the merged
+   branch to the index, ready to be committed. A non-committing merge is only
+   stopped when not fast forwarding. Otherwise, like a squashing merge, it is
+   ready to be committed, but with two heads. All non-committed merges can
+   still be aborted.
 ** =r= rebase
    besides simple rebasing, allows for interactive and rebasing of subsets.
    Rebase a subset by showing the log, placing the mark onto the commit to be
@@ -181,10 +194,13 @@ That said, one of the best tools for ~git mergetool~ may still be ~vimdiff~.
 
 
 * Best Practice
-
-** Requesting ~remote show origin~
-   ..is still done best by just executing it as command using =:=.
-
+** =:= execute complex command
+   Requesting ~remote show origin~ is still done best by just executing it as command using =:=.
+   Also adding/removing/changing remotes.
+** fetching/pulling
+   ..best way seems to be to fetch (probably incl pruning) and than merging
+   the working branches in a different step. This way you can detect rebases
+   on the remote or other changes which would result in a local non-ff merge.
 
 * Footnotes
 
