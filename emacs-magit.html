@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-04-24 Fr 11:26 -->
+<!-- 2020-09-08 Di 18:46 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>How to use Magit in Emacs</title>
@@ -194,9 +194,10 @@ for the JavaScript code in this tag.
 <li><a href="#orgheadline33"><code>e</code> edit conflicting file</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline35">Best Practice</a>
+<li><a href="#orgheadline36">Best Practice</a>
 <ul>
-<li><a href="#orgheadline34">Requesting <code>remote show origin</code></a></li>
+<li><a href="#orgheadline34"><code>:</code> execute complex command</a></li>
+<li><a href="#orgheadline35">fetching/pulling</a></li>
 </ul>
 </li>
 </ul>
@@ -441,8 +442,9 @@ file's region by marking the lines.
 <h3 id="orgheadline20"><code>u</code> unstage (<code>U</code> unstage all)</h3>
 <div class="outline-text-3" id="text-orgheadline20">
 <p>
-Select elements from index to be unstaged. This way the staging area gets
-really easy..
+Select elements from index to be unstaged. Unstaging actually means copying
+elements from current HEAD to index (like <code>git reset --</code>). This way the
+staging area gets really easy..
 </p>
 </div>
 </div>
@@ -460,7 +462,7 @@ intuitively use the stashing feature. Best practice to use this often.
 <p>
 allows to reset the current branch head only (soft), head and index (mixed)
 or head, index and working copy (hard); or to reset a file by copying from
-a commit to index and working copy.
+a commit to index and working copy, this way having it staged.
 </p>
 </div>
 </div>
@@ -468,7 +470,10 @@ a commit to index and working copy.
 <h3 id="orgheadline23"><code>k</code> discard a change from working tree</h3>
 <div class="outline-text-3" id="text-orgheadline23">
 <p>
-checkout from HEAD to index and working copy.
+checkout from HEAD to index and working copy, or from index to working
+copy, depending on what is modified. Discarding an unstaged change is like
+<code>git checkout --</code>, discarding a staged change also applies <code>reset --</code>
+before.
 </p>
 </div>
 </div>
@@ -485,7 +490,16 @@ views you can also use <code>s</code> (stage diff hunk) or <code>k</code> (disca
 <h3 id="orgheadline25"><code>m</code> merge</h3>
 <div class="outline-text-3" id="text-orgheadline25">
 <p>
-allows all flavors of merging.
+allows all flavors of merging. When a non-ff-merge is interrupted (that is,
+a conflicting diff is applied), the index contains the diffs of all
+merge-branch-commits applied, the working tree contains the conflicting
+files. Call <code>magit-merge-abort</code> or <code>magit-abort-dwim</code> to reset index and
+working tree to previous HEAD. After resolving conflicts, stage and commit
+to conclude merge. A squashing merge applies all commits of the merged
+branch to the index, ready to be committed. A non-committing merge is only
+stopped when not fast forwarding. Otherwise, like a squashing merge, it is
+ready to be committed, but with two heads. All non-committed merges can
+still be aborted.
 </p>
 </div>
 </div>
@@ -583,14 +597,25 @@ That said, one of the best tools for <code>git mergetool</code> may still be <co
 </div>
 
 
-<div id="outline-container-orgheadline35" class="outline-2">
-<h2 id="orgheadline35">Best Practice</h2>
-<div class="outline-text-2" id="text-orgheadline35">
+<div id="outline-container-orgheadline36" class="outline-2">
+<h2 id="orgheadline36">Best Practice</h2>
+<div class="outline-text-2" id="text-orgheadline36">
 </div><div id="outline-container-orgheadline34" class="outline-3">
-<h3 id="orgheadline34">Requesting <code>remote show origin</code></h3>
+<h3 id="orgheadline34"><code>:</code> execute complex command</h3>
 <div class="outline-text-3" id="text-orgheadline34">
 <p>
-..is still done best by just executing it as command using <code>:</code>.
+Requesting <code>remote show origin</code> is still done best by just executing it as command using <code>:</code>.
+Also adding/removing/changing remotes.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline35" class="outline-3">
+<h3 id="orgheadline35">fetching/pulling</h3>
+<div class="outline-text-3" id="text-orgheadline35">
+<p>
+..best way seems to be to fetch (probably incl pruning) and than merging
+the working branches in a different step. This way you can detect rebases
+on the remote or other changes which would result in a local non-ff merge.
 </p>
 </div>
 </div>
@@ -612,7 +637,7 @@ see <a href="https://magit.vc/">https://magit.vc/</a>
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Jörg Kollmann</p>
-<p class="date">Created: 2020-04-24 Fr 11:26</p>
+<p class="date">Created: 2020-09-08 Di 18:46</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
